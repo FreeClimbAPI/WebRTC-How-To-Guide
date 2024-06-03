@@ -106,16 +106,6 @@ function WhistleEngine() {
 		});
 
 		this.ua.start();
-		while (!this.ua.isConnected()) {
-			var start = new Date().getTime();
-			let milliseconds = 50;
-			console.log("ticking");
-			for (var i = 0; i < 1e7; i++) {
-				if ((new Date().getTime() - start) > milliseconds) {
-					break;
-				}
-			}
-		}
 	}
 
 	this.stop = function () {
