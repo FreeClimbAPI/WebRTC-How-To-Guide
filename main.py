@@ -7,12 +7,12 @@ import requests
 from dotenv import load_dotenv
 load_dotenv()
 
-FREECLIMB_URL = os.environ.get("LUMENCCS_URL", "api.lumenccs.com")
-FREECLIMB_WEBRTC_URL = os.environ.get("LUMENCCS_WEBRTC_URL", "webrtc.lumenccs.com")
-FREECLIMB_API_KEY = os.environ.get("LUMENCCS_API_KEY")
-FREECLIMB_ACCOUNT_ID = os.environ.get("LUMENCCS_ACCOUNT_ID")
-FREECLIMB_NUMBERS = os.environ.get("LUMENCCS_NUMBERS")
-FREECLIMB_FLASK_SECRET = os.environ.get("LUMENCCS_FLASK_SECRET", "for_production_set_to_something_secure")
+FREECLIMB_URL = os.environ.get("FREECLIMB_URL", "api.freeclimb.com")
+FREECLIMB_WEBRTC_URL = os.environ.get("FREECLIMB_WEBRTC_URL", "webrtc.freeclimb.com")
+FREECLIMB_API_KEY = os.environ.get("FREECLIMB_API_KEY")
+FREECLIMB_ACCOUNT_ID = os.environ.get("FREECLIMB_ACCOUNT_ID")
+FREECLIMB_NUMBERS = os.environ.get("FREECLIMB_NUMBERS")
+FREECLIMB_FLASK_SECRET = os.environ.get("FREECLIMB_FLASK_SECRET", "for_production_set_to_something_secure")
 
 
 if not FREECLIMB_ACCOUNT_ID or not FREECLIMB_API_KEY or not FREECLIMB_NUMBERS or not FREECLIMB_WEBRTC_URL:

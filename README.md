@@ -45,7 +45,7 @@ engine.start(config);
 engine.dial("+1234567890");
 ```
 
-## Lumen CCS WebRTC Flow
+## FreeClimb WebRTC Flow
 
 ```mermaid
 sequenceDiagram
@@ -75,7 +75,7 @@ This repo contains several components used to generate necessary authentication 
 | ------ | -------- |
 | [static](./static/) | This folder contains both the underlying SIP library [JsSIP](./static/jssip-3.10.0.js) as well as the [SDK](./static/whistle-engine.js) |
 | [templates](./templates/) | This folder contains the sample HTML [document](./templates/webrtc-calls.html) that the [Flask](https://flask.palletsprojects.com/en/3.0.x/) application renders with the requested config|
-| [main.py](./main.py) | This is the Python web application that will serve both the HTML document as well as interface with the Lumen CCS JWT Service |
+| [main.py](./main.py) | This is the Python web application that will serve both the HTML document as well as interface with the FreeClimb API Server |
 | [requirements.txt](./requirements.txt) | This contains the list of required Python dependencies and versions, used for setup |
 | [.env.example](./.env.example) | This contains the example environment variables used to configure the Flask application |
 | [Dockerfile](./Dockerfile) | The Dockerfile contains instructions for building the application as a Docker image as an alternate method of running |
