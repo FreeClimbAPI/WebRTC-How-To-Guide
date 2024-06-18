@@ -7,7 +7,7 @@ import requests
 from dotenv import load_dotenv
 load_dotenv()
 
-FREECLIMB_URL = os.environ.get("FREECLIMB_URL", "api.freeclimb.com")
+FREECLIMB_URL = os.environ.get("FREECLIMB_URL", "freeclimb.com")
 FREECLIMB_WEBRTC_URL = os.environ.get("FREECLIMB_WEBRTC_URL", "webrtc.freeclimb.com")
 FREECLIMB_API_KEY = os.environ.get("FREECLIMB_API_KEY")
 FREECLIMB_ACCOUNT_ID = os.environ.get("FREECLIMB_ACCOUNT_ID")
@@ -37,9 +37,26 @@ def gen_jwt():
         "uses": 10
     })
 
-    return jsonify({"token": r1.text})
+    if r1.status_code == 200:
+        return jsonify({"token": r1.text})
+    else:
+        return jsonify({"error": "failed to fetch JWT from FreeClimb API"}),401
 
 # Frontend Serving with config from env
 @app.route("/webrtc-calls", methods=["GET"])
 def webrtc_calls():
-    return render_template('webrtc-calls.html', numbers=PARSED_FREECLIMB_NUMBERS.items(), domain=FREECLIMB_WEBRTC_URL)
+    application_list = requests.get(f"https://{FREECLIMB_URL}/apiserver/Accounts/{FREECLIMB_ACCOUNT_ID}/Applications", auth=(FREECLIMB_ACCOUNT_ID, FREECLIMB_API_KEY))
+    number_list = requests.get(f"https://{FREECLIMB_URL}/apiserver/Accounts/{FREECLIMB_ACCOUNT_ID}/IncomingPhoneNumbers?hasApplication=true", auth=(FREECLIMB_ACCOUNT_ID, FREECLIMB_API_KEY))
+
+    apps_with_numbers = []
+    if application_list.status_code != 200 or number_list.status_code != 200:
+        print("Failed to look up applications")
+    else:
+        apps = application_list.json().get("applications", [])
+        for number in number_list.json().get("incomingPhoneNumbers", []):
+            app_id = number.get("applicationId")
+            if app_obj := [app for app in apps if app.get("applicationId") == app_id]:
+                alias = app_obj[0].get("alias") if app_obj[0].get("alias") else app_obj[0].get("applicationId")
+                apps_with_numbers.append((alias, number.get("phoneNumber")))
+
+    return render_template('webrtc-calls.html', fc_applications=apps_with_numbers, numbers=PARSED_FREECLIMB_NUMBERS.items(), domain=FREECLIMB_WEBRTC_URL)
