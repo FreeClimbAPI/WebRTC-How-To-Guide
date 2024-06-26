@@ -11,15 +11,11 @@ FREECLIMB_URL = os.environ.get("FREECLIMB_URL", "freeclimb.com")
 FREECLIMB_WEBRTC_URL = os.environ.get("FREECLIMB_WEBRTC_URL", "webrtc.freeclimb.com")
 FREECLIMB_API_KEY = os.environ.get("FREECLIMB_API_KEY")
 FREECLIMB_ACCOUNT_ID = os.environ.get("FREECLIMB_ACCOUNT_ID")
-FREECLIMB_NUMBERS = os.environ.get("FREECLIMB_NUMBERS")
 FREECLIMB_FLASK_SECRET = os.environ.get("FREECLIMB_FLASK_SECRET", "for_production_set_to_something_secure")
 
-
-if not FREECLIMB_ACCOUNT_ID or not FREECLIMB_API_KEY or not FREECLIMB_NUMBERS or not FREECLIMB_WEBRTC_URL:
+if not FREECLIMB_ACCOUNT_ID or not FREECLIMB_API_KEY or not FREECLIMB_WEBRTC_URL:
     print("Please ensure required environment variables are set in the .env file")
     sys.exit(1)
-
-PARSED_FREECLIMB_NUMBERS = {num.split(":")[0]:num.split(":")[1] for num in FREECLIMB_NUMBERS.split(",")}
 
 app = Flask(__name__, static_url_path='')
 app.secret_key = FREECLIMB_FLASK_SECRET
@@ -43,6 +39,7 @@ def gen_jwt():
         return jsonify({"error": "failed to fetch JWT from FreeClimb API"}),401
 
 # Frontend Serving with config from env
+@app.route("/", methods=["GET"])
 @app.route("/webrtc-calls", methods=["GET"])
 def webrtc_calls():
     application_list = requests.get(f"https://{FREECLIMB_URL}/apiserver/Accounts/{FREECLIMB_ACCOUNT_ID}/Applications", auth=(FREECLIMB_ACCOUNT_ID, FREECLIMB_API_KEY))
@@ -59,4 +56,4 @@ def webrtc_calls():
                 alias = app_obj[0].get("alias") if app_obj[0].get("alias") else app_obj[0].get("applicationId")
                 apps_with_numbers.append((alias, number.get("phoneNumber")))
 
-    return render_template('webrtc-calls.html', fc_applications=apps_with_numbers, numbers=PARSED_FREECLIMB_NUMBERS.items(), domain=FREECLIMB_WEBRTC_URL)
+    return render_template('webrtc-calls.html', fc_applications=[], domain=FREECLIMB_WEBRTC_URL)

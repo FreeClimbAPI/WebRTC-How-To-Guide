@@ -35,6 +35,7 @@
                         for (let i = 0; i < buttons.length; i++) {
                             buttons[i].classList.remove("btn-primary");
                             buttons[i].classList.add("btn-secondary");
+                            buttons[i].disabled = true;
                         }
                         document.getElementById("make_call_" + number).classList.remove("btn-secondary");
                         document.getElementById("make_call_" + number).classList.add("btn-success");
@@ -50,6 +51,7 @@
                             buttons[i].classList.add("btn-primary");
                             buttons[i].classList.remove("btn-secondary");
                             buttons[i].classList.remove("btn-success");
+                            buttons[i].disabled = false;
                         }
                     },
                     'call_ended': function () {
@@ -59,6 +61,7 @@
                             buttons[i].classList.add("btn-primary");
                             buttons[i].classList.remove("btn-secondary");
                             buttons[i].classList.remove("btn-success");
+                            buttons[i].disabled = false;
                         }
                     }
                 };
@@ -84,12 +87,14 @@
                     Make a Call
                 </div>
                 <div class="card-body">
-                    {% for name, num in numbers %}
-                    <button type="button" class="btn btn-primary call_buttons m-1" id="make_call_{{num}}" onclick="MakeCall('{{ num }}')">{{ name }}<div id="spinner_{{num}}" class="spinner-grow" role="status" style="display: none;"></div></button>
-                    {% endfor %}
+                    {% if fc_applications %}
                     {% for name, num in fc_applications %}
                     <button type="button" class="btn btn-primary call_buttons m-1" id="make_call_{{num}}" onclick="MakeCall('{{ num }}')">{{ name }}<div id="spinner_{{num}}" class="spinner-grow" role="status" style="display: none;"></div></button>
                     {% endfor %}
+                    {% else %}
+                    <h1>No FreeClimb Applications found with number attached.</h1>
+                    <h1>Please ensure you setup a FreeClimb Application and associate a FreeClimb Phone Number with it.</h1>
+                    {% endif %}
                 </div>
                 <div class="card-footer" id="footer" style="display: none;">
                     <button type="button" class="btn btn-danger" id="accept_call" onclick="engine.hangup()">Hangup</button>
