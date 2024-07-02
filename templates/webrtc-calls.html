@@ -21,7 +21,6 @@
 
         function MakeCall(number) {
             getJWT(number, 123456).then(function (token) {
-
                 var config = {
                     'user': '123456',
                     'proxy': '{{ domain }}',
@@ -65,10 +64,9 @@
                         }
                     }
                 };
-
                 engine = new FreeClimbVoice();
-                engine.start(config);
 
+                engine.start(config);
                 engine.dial(number);
             })
         }

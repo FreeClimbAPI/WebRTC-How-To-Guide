@@ -56,4 +56,4 @@ def webrtc_calls():
                 alias = app_obj[0].get("alias") if app_obj[0].get("alias") else app_obj[0].get("applicationId")
                 apps_with_numbers.append((alias, number.get("phoneNumber")))
 
-    return render_template('webrtc-calls.html', fc_applications=[], domain=FREECLIMB_WEBRTC_URL)
+    return render_template('webrtc-calls.html', fc_applications=apps_with_numbers, domain=FREECLIMB_WEBRTC_URL)

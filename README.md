@@ -14,7 +14,7 @@ To run the example contained in this repository:
         - `pip install -r requirements.txt`
 3. Run the server with `FLASK_APP=main.py flask run --port 5001`
     - this is a development server, not for production use
-4. Connect to `http://localhost:5001/webrtc-calls`
+4. Connect to `http://localhost:5001/webrtc-calls` via Google Chrome browser, this demo application has only been tested in Google Chrome.
 5. Click on the desired call button
 6. Hangup (if desired)
 
@@ -73,9 +73,9 @@ This repo contains several components used to generate necessary authentication 
 
 | Object | Function |
 | ------ | -------- |
-| [static](./static/) | This folder contains both the underlying SIP library [JsSIP](./static/jssip-3.10.0.js) as well as the [SDK](./static/whistle-engine.js) |
-| [templates](./templates/) | This folder contains the sample HTML [document](./templates/webrtc-calls.html) that the [Flask](https://flask.palletsprojects.com/en/3.0.x/) application renders with the requested config|
+| [static](./static/) | Both the underlying SIP library [JsSIP](./static/jssip-3.10.0.js) as well as the [SDK](./static/whistle-engine.js) |
+| [templates](./templates/) | The sample HTML [document](./templates/webrtc-calls.html) that the [Flask](https://flask.palletsprojects.com/en/3.0.x/) application renders with the requested config|
 | [main.py](./main.py) | This is the Python web application that will serve both the HTML document as well as interface with the FreeClimb API Server |
-| [requirements.txt](./requirements.txt) | This contains the list of required Python dependencies and versions, used for setup |
-| [.env.example](./.env.example) | This contains the example environment variables used to configure the Flask application |
+| [requirements.txt](./requirements.txt) | The list of required Python dependencies and versions, used for setup |
+| [.env.example](./.env.example) | The example environment variables used to configure the Flask application |
 | [Dockerfile](./Dockerfile) | The Dockerfile contains instructions for building the application as a Docker image as an alternate method of running |

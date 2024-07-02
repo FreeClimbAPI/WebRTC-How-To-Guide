@@ -110,7 +110,7 @@ function FreeClimbVoice() {
 
 	this.stop = function () {
 		this.ua.stop();
-		ua = null;
+		this.ua = null;
 
 		return (true);
 	}
